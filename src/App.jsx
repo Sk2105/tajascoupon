@@ -9,10 +9,9 @@ function App() {
 
 
   return (
-    <div className='w-full h-full bg-[#D0A9F5] flex flex-col'>
+    <div className='w-full h-full justify-center items-center bg-[#D0A9F5] flex flex-col'>
      <Headers />
      <CouponView />
-     <About />
     </div>
   )
 }

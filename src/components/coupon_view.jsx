@@ -18,21 +18,12 @@ export default function CouponView() {
 
     const fetchData = async () => {
         setList([]);
+
         const result = async () =>
             await db.sql(`use database TajasCoupon; SELECT * FROM t_coupon WHERE date = '${`${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`}' `);
 
         await result().then((data) => {
-            for (let d of data) {
-                console.log(data);
-                
-                setList((list) => {
-                    list.push(d);
-                    return list;
-                });
-
-            }
-
-
+            setList(data);
         });
     }
 
@@ -46,11 +37,11 @@ export default function CouponView() {
 
                 <input type="date" className="bg-[#45a049] hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" value={
                     `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate().toString().padStart(2, '0')}`
-                } onChange={(e) => { 
+                } onChange={(e) => {
                     setCurrentDate(new Date(e.target.value));
                     console.log(e.target.value);
-                    
-                }}  />
+
+                }} />
 
                 <button className="bg-[#45a049] hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={
                     () => {
@@ -59,7 +50,7 @@ export default function CouponView() {
                 } >
                     Refresh
                 </button>
-                
+
             </div>
 
             <div className="flex flex-col rounded-xl  w-full p-2 justify-center items-center">
@@ -69,22 +60,35 @@ export default function CouponView() {
                     <p className="w-1/3 border-r pt-3 pb-3 border-l  text-center font-bold">Result</p>
                 </div>
 
-                    {
-                        list.map((d) => <Card time={d.time} key={d.id} coupon={d.coupon} result={d.result} />)
-                    }
-               
+                {
+                    list.length>0 ? <ShowList list={list}/> : <p className="text-sm m-4 font-bold text-[#45a049]">No data</p>
+                }
+
             </div>
         </div>
     );
 }
 
 
+function ShowList({ list }) {
+    return (
+        <>
+            {
+                list.map(d=> (
+                    <Card key={d.time} time={d.time} coupon={"Tejas"} result={d.result} />
+                ))
+            }
+        </>
+    )
+}
+
 function Card({ time, coupon, result }) {
+
     return (
         <div className="h-[50px] flex bg-[#45a04950] text-black flex-row border-b text-sm items-center justify-around border-t w-full">
             <p className="w-1/3 border-r pt-3 pb-3  border-l text-center">{time}</p>
             <p className="w-1/3 border-r pt-3 pb-3  border-l text-center">{coupon}</p>
-            <p className="w-1/3 border-r pt-3 pb-3 border-l  text-center">{result}</p>
+            <p className="w-1/3 border-r pt-3 pb-3  border-l  text-center">{result}</p>
         </div>
     );
 }
