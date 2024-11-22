@@ -85,10 +85,10 @@ function ShowList({ list }) {
 function Card({ time, coupon, result }) {
 
     return (
-        <div className="h-[50px] flex bg-[#45a04950] text-black flex-row border-b text-sm items-center justify-around border-t w-full">
+        <div className="h-[50px] flex bg-white text-black flex-row border-b text-sm items-center justify-around border-t w-full">
             <p className="w-1/3 border-r pt-3 pb-3  border-l text-center">{time}</p>
             <p className="w-1/3 border-r pt-3 pb-3  border-l text-center">{coupon}</p>
-            <p className="w-1/3 border-r pt-3 pb-3  border-l  text-center">{result}</p>
+            <p className="w-1/3 border-r pt-3 pb-3  border-l  text-center">{result.toString().padStart(2, '0')}</p>
         </div>
     );
 }
