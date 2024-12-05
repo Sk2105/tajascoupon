@@ -2,8 +2,7 @@
 import db from "../db/db_connection";
 import { useState } from "react";
 import { useEffect } from "react";
-import { app } from "../assets/Firebase"
-import { getAnalytics, logEvent } from "firebase/analytics";
+
 
 
 export default function CouponView() {
@@ -11,7 +10,6 @@ export default function CouponView() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [currentFormattedDate, setFormattedCurrentDate] = useState(`${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`);
 
-    const analytics = getAnalytics(app)
     const [list, setList] = useState([]);
     useEffect(() => {
         fetchData();
@@ -45,7 +43,6 @@ export default function CouponView() {
 
                 <button className="bg-[#45a049] hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={
                     () => {
-                        logEvent(analytics,"refresh_page")
                         window.location.reload();
                     }
                 } >
