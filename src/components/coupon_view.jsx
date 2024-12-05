@@ -2,15 +2,16 @@
 import db from "../db/db_connection";
 import { useState } from "react";
 import { useEffect } from "react";
+import { app } from "../assets/Firebase"
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 
 export default function CouponView() {
 
-
     const [currentDate, setCurrentDate] = useState(new Date());
     const [currentFormattedDate, setFormattedCurrentDate] = useState(`${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`);
-    console.log(currentDate);
 
+    const analytics = getAnalytics(app)
     const [list, setList] = useState([]);
     useEffect(() => {
         fetchData();
@@ -39,12 +40,12 @@ export default function CouponView() {
                     `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate().toString().padStart(2, '0')}`
                 } onChange={(e) => {
                     setCurrentDate(new Date(e.target.value));
-                    console.log(e.target.value);
 
                 }} />
 
                 <button className="bg-[#45a049] hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={
                     () => {
+                        logEvent(analytics,"refresh_page")
                         window.location.reload();
                     }
                 } >
@@ -61,7 +62,7 @@ export default function CouponView() {
                 </div>
 
                 {
-                    list.length>0 ? <ShowList list={list}/> : <p className="text-sm m-4 font-bold text-[#45a049]">No data</p>
+                    list.length > 0 ? <ShowList list={list} /> : <p className="text-sm m-4 font-bold text-[#45a049]">No data</p>
                 }
 
             </div>
@@ -74,7 +75,7 @@ function ShowList({ list }) {
     return (
         <>
             {
-                list.map(d=> (
+                list.map(d => (
                     <Card key={d.time} time={d.time} coupon={"Tejas"} result={d.result} />
                 ))
             }
