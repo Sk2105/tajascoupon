@@ -8,7 +8,6 @@ import { useEffect } from "react";
 export default function CouponView() {
 
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [currentFormattedDate, setFormattedCurrentDate] = useState(`${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`);
 
     const [list, setList] = useState([]);
     useEffect(() => {
@@ -35,7 +34,7 @@ export default function CouponView() {
                 <p className="text-sm text-[#45a049">Date</p>
 
                 <input type="date" className="bg-[#45a049] hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" value={
-                    `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate().toString().padStart(2, '0')}`
+                    `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`
                 } onChange={(e) => {
                     setCurrentDate(new Date(e.target.value));
 
@@ -80,13 +79,13 @@ function ShowList({ list }) {
     )
 }
 
-function Card({ time, coupon, result,color }) {
+function Card({ time, coupon, result, color }) {
 
     return (
-        <div className="h-[50px] flex bg-white text-black flex-row border-b text-sm items-center justify-around border-t w-full">
-            <p className="w-1/3 border-r pt-3 pb-3  border-l text-center">{time}</p>
-            <p className="w-1/3 border-r pt-3 pb-3  border-l text-center">{coupon}</p>
-            <p className="w-1/3 border-r pt-3 pb-3  border-l  text-center" style={{backgroundColor:color}}>{result.toString().padStart(2, '0')}</p>
+        <div className="h-[60px] flex bg-white text-black flex-row  text-sm items-center justify-around  w-full">
+            <p className="w-1/3 h-full place-content-center border text-center">{time}</p>
+            <p className="w-1/3 border place-content-center h-full  text-center">{coupon}</p>
+            <p className="w-1/3 border place-content-center h-full text-center" style={{ backgroundColor: color }}>{result.toString().padStart(2, '0')}</p>
         </div>
     );
 }
