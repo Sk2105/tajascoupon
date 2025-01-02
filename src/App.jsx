@@ -5,9 +5,10 @@ import db from './db/db_connection'
 function App() {
   const date = new Date()
   useEffect(() => {
-    db.sql`insert into views(date) values(${date.toLocaleDateString()})`
-  },[])
-  
+    const d = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    db.sql`insert into views(date) values(${d})`
+  }, [])
+
   return (
     <div className='w-full h-full justify-center items-center bg-[#D0A9F5] flex flex-col'>
       <Headers />
